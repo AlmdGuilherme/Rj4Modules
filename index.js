@@ -60,6 +60,7 @@ class Cliente {
       for (let telefone of this.telefone){
         clienteMessage += `Telefone: (${telefone.ddd})-${telefone.numero} \n`
       }
+      return clienteMessage
     }
   }
 
