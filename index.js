@@ -60,7 +60,9 @@ class Cliente {
       for (let telefone of this.telefone){
         clienteMessage += `Telefone: (${telefone.ddd})-${telefone.numero} \n`
       }
-      return clienteMessage
+      return `Nome: ${this.nome} \n` +
+      `Estado: ${this.endereco.estado} Cidade: ${this.endereco.cidade} Rua: ${this.endereco.rua} Número: ${this.endereco.numero} \n` +
+      `${clienteMessage}`
     }
   }
 
@@ -131,14 +133,13 @@ class Empresa{
 
     companyDetails(){
     let mensagem = ''
-    for (let cliente of this.cliente){
+    for (let cliente of this.clientes){
       mensagem += cliente.clienteDetails() + '\n'
     }
     return `Razão Social: ${this.razaoSocial} \n` +
       `Nome: ${this.nome} \n` +
       '------------------------------------------ \n' +
-      `${mensagem}`
-    
+      `${mensagem}` 
   }
 }
 
