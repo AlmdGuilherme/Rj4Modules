@@ -16,25 +16,15 @@ class Telefone {
 
 class Cliente {
   #cpf
-  constructor(nome, cpf, endereco){
+  constructor(nome, cpf, endereco) {
     this.nome = nome
     this.#cpf = cpf
     this.endereco = endereco
     this.telefone = new Set()
   }
 
-  get privateClienteInfos(){
+  get clientePrivateInfo(){
     return `CPF: ${this.#cpf}`
-  }
-
-  adicionarTelefone(newTelefone){
-    for (let telefone of this.telefone){
-      if (newTelefone.ddd === telefone.ddd && newTelefone.numero === telefone.numero){
-        console.log('Este número de telefone já está cadastrado');
-      } else {
-        this.telefone.add(newTelefone)
-      }
-    }
   }
 
   infosCase(){
@@ -52,47 +42,50 @@ class Cliente {
     )
   }
 
-  clienteDetails(){
-    let clienteMessage = ''
-    if (this.telefone.size === 0){
-      clienteMessage = 'Nenhum telefone encontrado'
-    } else {
-      for (let telefone of this.telefone){
-        clienteMessage += `Telefone: (${telefone.ddd})-${telefone.numero} \n`
-      }
-      return `Nome: ${this.nome} \n` +
-      `Estado: ${this.endereco.estado} Cidade: ${this.endereco.cidade} Rua: ${this.endereco.rua} Número: ${this.endereco.numero} \n` +
-      `${clienteMessage}`
-    }
+  adicionarTelefone(telInfos) {
+    this.telefone.add(telInfos)
   }
 
-  removeTelefone(telefoneToRemove){
-    if (this.telefone.size === 0){
-      console.log('Nenhum telefone encontrado');
+  removerTelefone(telefoneRemove) {
+    if (this.telefone.size === 0) {
+      console.log('Ainda não há telefones na lista')
     } else {
-      for(let telefone of this.telefone){
-        if (telefone.ddd === telefoneToRemove.ddd && telefone.numero === telefoneToRemove.numero){
-          this.telefone.delete(telefone)
+      for (let telefoneLista of this.telefone) {
+        if (telefoneLista.ddd === telefoneRemove.ddd && telefoneLista.numero === telefoneRemove.numero) {
+          console.log(`(${telefoneRemove.ddd})-${telefoneRemove.numero} foi removido da lista!`);
+          this.telefone.delete(telefoneLista)
+          break
         } else {
-          console.log('Telefone não encontrado');
+          console.log(`Não há um telefone registrado com - DDD: ${telefoneRemove.ddd} e Número: ${telefoneRemove.numero}`);
+          break
         }
       }
     }
   }
+
+  clienteDetails() { 
+    let mensagem = ''
+    for (let numero of this.telefone){
+      mensagem += `DDD: ${numero.ddd} Número: ${numero.numero} \n`
+    }
+    return `Nome: ${this.nome} \n` +
+      `Estado: ${this.endereco.estado} Cidade: ${this.endereco.cidade} Rua: ${this.endereco.rua} Número: ${this.endereco.numero} \n` +
+      `${mensagem}`
+  }
 }
 
-class Empresa{
+class Empresa {
   #cnpj
   constructor(nome, razaoSocial, cnpj, endereco) {
     this.nome = nome
     this.razaoSocial = razaoSocial
     this.#cnpj = cnpj
     this.endereco = endereco
-    this.clientes = new Set()
+    this.cliente = new Set()
     this.telefone = new Set()
   }
 
-  get privateEmpresaInfos(){
+  get empresaPrivateInfo(){
     return `CNPJ: ${this.#cnpj}`
   }
 
@@ -113,33 +106,37 @@ class Empresa{
     )
   }
 
-  adicionarCliente(cliente){
-    this.clientes.add(cliente)
+  adicionarClientes(cliente){
+    this.cliente.add(cliente)
   }
 
-  removeTelefone(telefoneToRemove){
-    if (this.telefone.size === 0){
-      console.log('Nenhum telefone encontrado');
+  removerTelefone(telefoneRemove) {
+    if (this.telefone.size === 0) {
+      console.log('Ainda não há telefones na lista')
     } else {
-      for(let telefone of this.telefone){
-        if (telefone.ddd === telefoneToRemove.ddd && telefone.numero === telefoneToRemove.numero){
-          this.telefone.delete(telefone)
+      for (let telefoneLista of this.telefone) {
+        if (telefoneLista.ddd === telefoneRemove.ddd && telefoneLista.numero === telefoneRemove.numero) {
+          console.log(`(${telefoneRemove.ddd})-${telefoneRemove.numero} foi removido da lista!`);
+          this.telefone.delete(telefoneLista)
+          // break
         } else {
-          console.log('Telefone não encontrado');
+          console.log(`Não há um telefone registrado com - DDD: ${telefoneRemove.ddd} e Número: ${telefoneRemove.numero}`);
+          // break
         }
       }
     }
   }
 
-    companyDetails(){
+  companyDetails(){
     let mensagem = ''
-    for (let cliente of this.clientes){
+    for (let cliente of this.cliente){
       mensagem += cliente.clienteDetails() + '\n'
     }
     return `Razão Social: ${this.razaoSocial} \n` +
       `Nome: ${this.nome} \n` +
       '------------------------------------------ \n' +
-      `${mensagem}` 
+      `${mensagem}`
+    
   }
 }
 
