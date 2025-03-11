@@ -128,6 +128,18 @@ class Empresa{
       }
     }
   }
+
+    companyDetails(){
+    let mensagem = ''
+    for (let cliente of this.cliente){
+      mensagem += cliente.clienteDetails() + '\n'
+    }
+    return `Razão Social: ${this.razaoSocial} \n` +
+      `Nome: ${this.nome} \n` +
+      '------------------------------------------ \n' +
+      `${mensagem}`
+    
+  }
 }
 
 export { Endereco, Telefone, Cliente, Empresa}
